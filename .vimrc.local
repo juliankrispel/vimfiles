@@ -1,0 +1,186 @@
+"set shell=/bin/bash
+set nocompatible              " be iMproved
+filetype off                  " required!
+if has("win32")
+    set rtp+=~/vimfiles/bundle/Vundle.vim/
+    let path='~/vimfiles/bundle'
+    "set rtp+=$HOME/vimfiles/bundle/Vundle.vim/
+    call vundle#begin(path) 
+else
+    set rtp+=~/.vim/bundle/Vundle.vim/
+    call vundle#begin()
+endif
+
+" let Vundle manage Vundle
+" required!
+Plugin 'gmarik/Vundle.vim'
+
+" Using netrw plugin instead of built in version (fixes some nasty bugs)
+"Plugin 'eiginn/netrw'
+
+" Plugins here
+" Language plugins
+Plugin 'tpope/vim-haml'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'ck.vim'
+Plugin 'mxw/vim-jsx'
+Plugin 'ngmy/vim-rubocop'
+Plugin 'reasonml/vim-reason-loader'
+Plugin 'sophacles/vim-processing'
+Plugin 'mintplant/vim-literate-coffeescript'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'vim-ruby/vim-ruby'
+"Plugin 'benekastah/neomake'
+Plugin 'po.vim'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'claco/jasmine.vim'
+Plugin 'mtscout6/vim-cjsx'
+Plugin 'lambdatoast/elm.vim'
+Plugin 'ruanyl/vim-fixmyjs'
+
+" CSS
+Plugin 'wavded/vim-stylus'
+"Plugin 'vim-less'
+Plugin 'digitaltoad/vim-jade'
+Plugin 'skammer/vim-css-color'
+Plugin 'hail2u/vim-css3-syntax'
+
+" Snippets
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+
+" Javascript Plugins
+Plugin 'Shutnik/jshint2.vim'
+Plugin 'JSON.vim'
+Plugin 'pangloss/vim-javascript'
+
+" Enhancements
+" Plugin 'tpope/vim-sleuth'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
+Plugin 'kien/ctrlp.vim'
+Plugin 'Lokaltog/vim-powerline'
+Plugin 'mattn/emmet-vim'
+Plugin 'mattn/gist-vim'
+Plugin 'NrrwRgn'
+Plugin 'ack.vim'
+Plugin 'greplace.vim'
+Plugin 'Townk/vim-autoclose'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'DetectIndent'
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/syntastic'
+" Plugin 'flowtype/vim-flow'
+Plugin 'pmsorhaindo/syntastic-local-eslint.vim'
+
+" Color Schemes
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'morhetz/gruvbox'
+Plugin 'chriskempson/base16-vim'
+Plugin 'junegunn/seoul256.vim'
+Plugin 'desert256.vim'
+Plugin 'jonathanfilip/vim-lucius'
+Plugin 'noahfrederick/vim-hemisu'
+Plugin 'rhysd/vim-crystal'
+Plugin 'yaml.vim'
+
+call vundle#end()
+
+" Vim Colorscheme and Font Settings
+set guifont=Bitstream\ Vera\ Sans\ Mono:h14
+
+"let base16colorspace=256  " Access colors present in 256 colorspace
+let g:solarized_termcolors = 256
+let g:solarized_visibility = "medium"
+let g:solarized_contrast = "high"
+let g:solarized_termtrans = 1
+
+"colorscheme base16-solarized
+" source ~/needful.vim/needful.vim
+colorscheme solarized
+set background=light
+"highlight LineNr ctermfg=8 ctermbg=20
+" hi Comment ctermfg=8
+
+" automatically detect indentation when opening a buffer
+" :autocmd BufReadPost * :DetectIndent 
+
+" Don't remove newlines at end of file
+set fileformats+=dos
+set binary
+set noeol
+
+" Numbers of pixels between lines
+:set linespace=8
+
+" Disable text wrapping
+set nowrap
+
+filetype indent on
+filetype plugin indent on
+"
+let g:ctrlp_match_window_bottom = 0
+
+autocmd FileType sass,scss,stylus syn cluster sassCssAttributes add=@cssColors
+
+au BufNewFile,BufRead *.phtml set filetype=html
+au BufNewFile,BufRead *.cshtml set filetype=html
+au BufNewFile,BufRead *.coffee set filetype=coffee
+au BufNewFile,BufRead *.csjx set filetype=coffee
+au BufNewFile,BufRead *.less set filetype=less
+au BufNewFile,BufRead *.pde set filetype=processing
+
+
+" Disable italic for comments
+let g:solarized_italic=0
+
+set tabstop=2
+set sw=2
+set expandtab
+"
+"
+"
+" Lint .js files before saving
+" autocmd! BufWritePost * if &filetype == "javascript" | silent JSHint | endif
+
+noremap <left> noop
+noremap <right> noop
+noremap <up> noop
+noremap <down> noop
+
+" Enable jsx highlighting for js files
+let g:jsx_ext_required = 0
+
+:set guioptions-=m  "remove menu bar
+:set guioptions-=T  "remove toolbar
+:set guioptions-=r  "remove right-hand scroll bar
+:set guioptions-=L  "remove left-hand scroll bar
+
+" relative line numbers
+set relativenumber
+
+" Syntastic configuration
+set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+" 
+let g:syntastic_loc_list_height=3
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 1
+let g:syntastic_javascript_checkers = ['eslint']
+" let g:syntastic_html_checkers = []
+"
+set wildignore+=*/tmp/*,*/node_modules/*,*.so,*.swp,*.zip
+autocmd! BufReadPost * let b:syntastic_skip_checks = 0
+autocmd! BufWritePost * let b:syntastic_skip_checks = 0
+
+"let g:neomake_javascript_enabled_makers = ['eslint']
+"autocmd! BufWritePost * Neomake
+
+" address vim slowness
+set lazyredraw
+set ttyfast
